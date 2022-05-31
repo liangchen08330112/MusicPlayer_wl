@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="loginGreen">#77DA83</color>
+
+    <!-- 主题一的配色 -->
+    <color name="register_title_background">#8E6A8CC7</color> 	<!-- 注册页最上方显示“新注册用户”的横条背景色 -->
+    <color name="home_title_background">#4a4834</color> 	<!-- 主页上菜单栏显示“我的音乐”的横条背景色 -->
+    <color name="home_bottom_background">#883e362e</color>	<!-- 主页下方显示播放栏的背景色 -->
+    <color name="grid_item_background">#80a5a09d</color>	<!-- 九宫格每小格的背景色 -->
+    <color name="tab_checked">#FFFF00</color>				<!-- 主页滑动时被选中的tab的标题和下滑横杠颜色 -->
+    <color name="tab_not_checked">#CDC673</color> 			<!-- 主页滑动时没被选中的tab的下滑横杠颜色 -->
+
+    <!-- 主题二的配色 -->
+    <color name="home_title_background2">#869daf</color>
+    <color name="home_bottom_background2">#889fb5c9</color>
+    <color name="grid_item_background2">#807895af</color>
+    <color name="tab_checked2">#FFFF00</color>
+    <color name="tab_not_checked2">#778899</color>
+</resources>
+
+    <!--颜色和不透明度 (alpha) 值以十六进制表示法表示。
+    任何一种颜色的值范围都是 0 到 255(00 到 ff)。
+    对于 alpha，00 表示完全透明，ff 表示完全不透明。
+    表达式顺序是“aarrggbb”，其中“aa=alpha”(00 到 ff);“rr=red”(00 到 ff);“gg=green”(00 到 ff);“bb=blue”(00 到 ff)。
+    例如，如果您希望对某叠加层应用不透明度为 50% 的蓝色，则应指定以下值：800000ff -->
