@@ -1,7 +1,10 @@
 package cn.edu.sict.musicplayer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -24,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button activity_login_btn_login;
     private CheckBox activity_login_cb_keep_password;
 
+    SQLiteDatabase db;
+
     //定义常量，用于作为requestCode，确认是否由注册界面返回
     public static final int REGISTER_CODE = 0;
     //用于判断是否从注册页面回传了数据回到本页面。
@@ -35,6 +41,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+        db = openOrCreateDatabase("users.db",MODE_PRIVATE,null);
+        db.execSQL("create table if not exists users(name varchar(20),pswd varchar(20),primary key(name))");
     }
 
 
@@ -106,13 +114,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        try {
+            //核验用户输入的信息是否与数据库中的用户名、密码核对成功。
+            //根据用户名获取数据库中存储的密码
+            Cursor cursor = db.rawQuery("select pswd from users where name=?",new String[]{name});
+            //取出的结果放在pswd_check字符串中
+            String pswd_check = null;
+            //判断取出的数据有几行，一般只有1行或0行两种可能。
+            if(cursor.getCount()==1){
+                //跳转到第一行
+                cursor.moveToFirst();
+                //取出第一行第一列的数据
+                pswd_check = cursor.getString(0);
+                if(pswd_check.equals(pswd)){
+                    //记住密码，写入SharedPreferences文件
+                    writeSharedPreferences(name,pswd);
+
+                    //跳转到HomeActivity主页面
+                    startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                }else {
+                    Toast.makeText(this,"用户名或密码错误",Toast.LENGTH_LONG).show();
+                }
+            }else {
+                Toast.makeText(this,"用户不存在",Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception e){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("提示").setMessage("系统错误，请重试。").setCancelable(true)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
         // TODO validate success, do something
-
-        //记住密码，写入SharedPreferences文件
-        writeSharedPreferences(name,pswd);
-
-        //跳转到HomeActivity主页面
-        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
     }
 
 
@@ -153,5 +192,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         //提交。
         editor.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        db.close();
+        super.onDestroy();
     }
 }

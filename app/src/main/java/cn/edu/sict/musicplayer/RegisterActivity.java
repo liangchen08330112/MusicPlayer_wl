@@ -1,6 +1,8 @@
 package cn.edu.sict.musicplayer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -20,11 +23,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText activity_register_et_pswd2;
     private Button activity_register_btn_register;
 
+    SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initView();
+        db = openOrCreateDatabase("users.db",MODE_PRIVATE,null);
+        db.execSQL("create table if not exists users(name varchar(20),pswd varchar(20),primary key(name))");
     }
 
     private void initView() {
@@ -73,6 +80,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if(!pswd1.equals(pswd2)){
             Toast.makeText(RegisterActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT).show();
         }else{
+            try {
+                //插入数据
+                db.execSQL("insert into users(name,pswd) values(?,?)",new String[]{name,pswd1});
+            }catch (Exception e){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("提示").setMessage("系统错误，请重试。").setCancelable(true)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
 
             //将用户名、密码传递回LoginActivity
 
@@ -89,5 +111,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             finish();
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //注册结束，关闭数据库
+        db.close();
     }
 }
