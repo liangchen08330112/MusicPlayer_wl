@@ -1,6 +1,5 @@
 package cn.edu.sict.musicplayer;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -30,8 +28,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initView();
-        db = openOrCreateDatabase("users.db",MODE_PRIVATE,null);
-        db.execSQL("create table if not exists users(name varchar(20),pswd varchar(20),primary key(name))");
+
+        //创建或打开数据库
+        db = openOrCreateDatabase("musicplayer.db",MODE_PRIVATE,null);
+        //在数据库中创建数据表users
+        db.execSQL("create table if not exists users(name varchar(50),pswd varchar(50),primary key(name))");
+
     }
 
     private void initView() {
@@ -80,43 +82,41 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if(!pswd1.equals(pswd2)){
             Toast.makeText(RegisterActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT).show();
         }else{
+
+            //【将用户名、密码添加到数据库中】
+
+            //使用try...catch...的原因：
+            //  为防止操作数据库产生Exception异常，导致程序中断，
+            //  可以使用异常处理的方法，捕捉到的所有Exception都用Toast提示报错的方式解决。
             try {
-                //插入数据
-                db.execSQL("insert into users(name,pswd) values(?,?)",new String[]{name,pswd1});
+
+                // 向表中添加一条用户数据
+                db.execSQL("insert into users(name,pswd) values(?,?)", new String[]{name, pswd1});
+
+                //【将用户名、密码传递回LoginActivity】
+
+                //定义Intent对象并存入数据
+                Intent data = getIntent();
+                data.putExtra("name",name);
+                data.putExtra("pswd",pswd1);
+                //设置resultCode
+                // 第一个参数：传入一个结果码
+                // 第二个参数：回传的数据，一个Intent对象
+                setResult(RESULT_OK,data);
+                //关闭本页面，返回LoginActivity
+                finish();
+
             }catch (Exception e){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("提示").setMessage("系统错误，请重试。").setCancelable(true)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                Toast.makeText(this,"注册失败",Toast.LENGTH_SHORT).show();
             }
-
-            //将用户名、密码传递回LoginActivity
-
-            //定义Intent对象并存入数据
-            Intent data = getIntent();
-            data.putExtra("name",name);
-            data.putExtra("pswd",pswd1);
-
-            //设置resultCode
-            // 第一个参数：传入一个结果码
-            // 第二个参数：回传的数据，一个Intent对象
-            setResult(RESULT_OK,data);
-            //关闭本页面，返回LoginActivity
-            finish();
 
         }
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        //注册结束，关闭数据库
+        //关闭数据库
         db.close();
+        super.onDestroy();
     }
 }

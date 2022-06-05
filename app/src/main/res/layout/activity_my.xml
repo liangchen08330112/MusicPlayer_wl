@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".player.MyActivity">
+
+
+    <Button
+        android:id="@+id/button_local"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:gravity="left|center_vertical"
+        android:text="本地音乐：0首"
+        android:drawableRight="@drawable/icon_display"
+        android:paddingLeft="25dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/grid_item_background"/>
+
+    <Button
+        android:id="@+id/button_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="音乐标签"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="25dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:background="@color/grid_item_background" />
+
+    <GridView
+        android:id="@+id/gridView_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="2dp"
+        android:layout_marginTop="2dp"/>
+
+    <Button
+        android:id="@+id/button_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="订阅歌单"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="25dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:background="@color/grid_item_background"/>
+
+    <GridView
+        android:id="@+id/gridView_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="2dp"
+        android:layout_marginTop="2dp"/>
+</LinearLayout>

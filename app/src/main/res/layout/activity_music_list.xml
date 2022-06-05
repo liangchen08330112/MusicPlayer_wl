@@ -11,7 +11,7 @@
         android:id="@+id/activity_music_list_layout_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/activity_music_list_lv"
+        app:layout_constraintBottom_toTopOf="@id/activity_music_list_rv"
         app:layout_constraintVertical_weight="0.08"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,15 +71,15 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ListView
-        android:id="@+id/activity_music_list_lv"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_music_list_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/activity_music_list_layout_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_music_list_layout_title"
-        app:layout_constraintVertical_weight="0.77"/>
+        app:layout_constraintVertical_weight="0.77" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_music_list_layout_bottom"
@@ -88,7 +88,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_music_list_lv"
+        app:layout_constraintTop_toBottomOf="@id/activity_music_list_rv"
         app:layout_constraintVertical_weight="0.15"
         android:orientation="vertical"
         android:background="@color/home_bottom_background">

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.edu.sict.musicplayer.MineFragment">
+
+    <Button
+        android:id="@+id/activity_mine_btn_local"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="本地音乐  0首"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="25dp"
+        android:drawableRight="@drawable/icon_display"
+        android:paddingRight="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/grid_item_background"/>
+
+    <Button
+        android:id="@+id/activity_mine_btn_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="音乐标签"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/grid_item_background"
+        android:clickable="false"/>
+
+    <GridView
+        android:id="@+id/activity_mine_gv_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="2dp"
+        android:layout_marginTop="2dp"/>
+
+    <Button
+        android:id="@+id/activity_mine_btn_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="订阅的歌单"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/grid_item_background"
+        android:clickable="false" />
+
+    <GridView
+        android:id="@+id/activity_mine_gv_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="2dp"
+        android:layout_marginTop="2dp"/>
+</LinearLayout>
